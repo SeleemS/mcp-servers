@@ -24,7 +24,7 @@ mcp-servers/
 │   └── build-bundle.js            # Aggregates servers into bundle/bundle.json
 ├── tests/                         # Vitest — schema, examples, placeholders, categories, bundle
 ├── bundle/                        # Generated — do not edit by hand
-├── .claude/skills/                # Claude Code skills: add-mcp-server, review-server-pr
+├── .claude/skills/                # Claude Code skills: add-mcp-server, review-server-pr, review-server-trust
 ├── CLAUDE.md                      # Imports this file for Claude Code
 ├── CONTRIBUTING.md
 └── LICENSE
@@ -71,7 +71,7 @@ Picking `auth.type`, derived from the inputs:
 | ≥1 input with `"secret": true, "required": true`, wired via a placeholder | `api_key` |
 | Secret input(s) all `"required": false` (anonymous / free tier / passwordless works) | `optional_api_key` |
 | Hosted `http` endpoint where McpMux runs the browser OAuth flow; normally zero inputs | `oauth` |
-| Username + secret password | `basic` (rare) |
+| Username + secret password (both required) | `api_key` |
 
 OAuth behavior (verified in the McpMux gateway):
 
@@ -123,6 +123,7 @@ In Claude Code, the `review-server-pr` skill runs this checklist against a PR.
 - [ ] File is `servers/<id>.json`, the ID follows the convention, and only intended files changed (no edits to `schemas/`, `scripts/`, `tests/`, `.github/`, `bundle/`)
 - [ ] `validate`, `check-conflicts` and `test` pass against **current** `main`, not just the PR's base
 - [ ] The package / image / endpoint exists and matches `links.repository`
+- [ ] Trust: the brand's own site or org links the endpoint/package (not just the other way round), credentials reach only their issuer, and the live tool surface asks for no card data, seed phrases or keys. The `review-server-trust` skill runs these checks
 - [ ] Every input is referenced by a placeholder. For http that means `headers` or `url`
 - [ ] `auth.type` matches the inputs (table above). No `oauth` + client-secret inputs on a hosted endpoint
 - [ ] Env var names and flags match the upstream docs

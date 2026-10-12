@@ -29,7 +29,7 @@
     "instructions": "No API key or sign-in is needed to search public directory and guide data."
   },
   "contributor": {
-    "name": "Grok Bot",
+    "name": "Grok Bot Wiki",
     "github": "SeleemS",
     "url": "https://www.grokbotwiki.com"
   },
@@ -42,5 +42,8 @@
     "resources": false,
     "prompts": false,
     "read_only_mode": true
-  }
+  },
+  "platforms": [
+    "all"
+  ]
 }
